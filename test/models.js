@@ -53,9 +53,26 @@ describe('Model tests', () => {
     agent
     .get('/api/bovadaAccounts')
     .then(res => {
-      console.log(res.body)
       expect(res.body).to.be.a('array')
       expect(res.body.length).to.eq(1)
+      done()
+    })
+  })
+  it('should save a bet', done => {
+    agent
+    .post('/api/placedBets/create')
+    .send({bovadaAccountId:123, outcomeId:123, priceId: 123})
+    .then(res => {
+      expect(res).to.be.ok
+      done()
+    })
+  })
+  it('should get all placed bets', done => {
+    agent
+    .get('/api/placedBets')
+    .then(res => {
+      expect(res.body).to.be.a('array')
+      console.log(res.body)
       done()
     })
   })
