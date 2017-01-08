@@ -14,9 +14,12 @@ describe('Model tests', () => {
     mongoose
       .connect(process.env.DATABASE_URL)
       .then(() => {
-        console.log('connected')
+        return mongoose.model('BovadaAccount').remove({})
       })
-      .then(done)
+      .then(() => {
+        console.log('connected')
+        done()
+      })
       .catch(done)
   });
 
@@ -32,8 +35,28 @@ describe('Model tests', () => {
       .then(res => {
         console.log(res.body)
       	expect(res.body).to.be.a('array');
-      	expect(res.body.length).to.gt(0)
+      	expect(res.body.length).to.eq(0)
       	done()
       })
+  })
+  it('should create a bovada account', done => {
+    agent
+    .post('/api/bovadaAccounts/create')
+    .send({username:'testing@gmail.com', password:'testing'})
+    .then(res => {
+      expect(res).to.be.ok
+      done()
+
+    })
+  })
+  it('should get all bovada accounts', done => {
+    agent
+    .get('/api/bovadaAccounts')
+    .then(res => {
+      console.log(res.body)
+      expect(res.body).to.be.a('array')
+      expect(res.body.length).to.eq(1)
+      done()
+    })
   })
 })
