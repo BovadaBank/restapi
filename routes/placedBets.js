@@ -21,6 +21,9 @@ router.route('/count')
 router.route('/create')
 .post((req, res) => {
   console.log('creating bet...', req.body.bovadaAccountId)
+  console.log(req.body.outcomeId)
+  console.log(req.body.edgebetId)
+  console.log(req.body.bovadaAccountId)
   if(!req.body.outcomeId) {
     console.log('no outcome id')
     return res.json({statusCode:400, message:'You need an outcome id'})
