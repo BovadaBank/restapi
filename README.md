@@ -1,6 +1,6 @@
 # restapi
 
-git clone https://github.com/tassl-app/restapi.git
+git clone https://github.com/bovadaBank/restapi.git
 
 npm install
 
