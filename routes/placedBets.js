@@ -22,12 +22,15 @@ router.route('/create')
 .post((req, res) => {
   console.log('creating bet...', req.body.bovadaAccountId)
   if(!req.body.outcomeId) {
+    console.log('no outcome id')
     return res.json({statusCode:400, message:'You need an outcome id'})
   }
   if(!req.body.edgebetId) {
+    console.log('no edgebet id')
     return res.json({statusCode:400, message: 'You need an edgebet id'})
   }
   if(!req.body.bovadaAccountId) {
+    console.log('no bovadaAccountId')
     return res.json({statusCode:400, message: 'You need a bovada account id'})
   }
   mongoose.model('placedBets').create({
