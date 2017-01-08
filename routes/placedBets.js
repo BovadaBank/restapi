@@ -35,8 +35,10 @@ router.route('/create')
     outcomeId: req.body.outcomeId,
     edgebetId: req.body.edgebetId
   })
-  .then(() => {
-    res.json({statusCode: 200, message:'Bet saved successfully'})
+  .then((obj) => {
+    obj.save()
+    console.log('bet saved successfully')
+    return res.json({statusCode: 200, message:'Bet saved successfully'})
   })
 })
 export default router
