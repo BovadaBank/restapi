@@ -5,7 +5,7 @@ let router = Router()
 
 router.route('/')
   .get((req, res) => {
-    mongoose.model('placedBets')
+    mongoose.model('PlacedBet')
     .find({})
     .then(result => {
       res.json(result)
@@ -13,17 +13,13 @@ router.route('/')
   })
 router.route('/count')
 .get((req, res) => {
-  mongoose.model('placedBets')
+  mongoose.model('PlacedBet')
   .find({})
   .then(res => res.json(res.length))
 })
 
 router.route('/create')
 .post((req, res) => {
-  console.log('creating bet...', req.body.bovadaAccountId)
-  console.log(req.body.outcomeId)
-  console.log(req.body.edgebetId)
-  console.log(req.body.bovadaAccountId)
   if(!req.body.outcomeId) {
     console.log('no outcome id')
     return res.json({statusCode:400, message:'You need an outcome id'})
@@ -36,7 +32,7 @@ router.route('/create')
     console.log('no bovadaAccountId')
     return res.json({statusCode:400, message: 'You need a bovada account id'})
   }
-  mongoose.model('placedBets').create({
+  mongoose.model('PlacedBet').create({
     bovadaAccountId: req.body.bovadaAccountId,
     outcomeId: req.body.outcomeId,
     edgebetId: req.body.edgebetId
@@ -47,4 +43,24 @@ router.route('/create')
     return res.json({statusCode: 200, message:'Bet saved successfully'})
   })
 })
+
+router.route('/remove')
+.post((req, res) => {
+  mongoose.model('PlacedBet').remove({})
+  .then(() => {
+    res.json({statusCode:200, message:'all placed bets have been deleted'})
+  })
+})
+
+router.route('/remove:id')
+.post((req, res) => {
+  if(!req.body.id) {
+    return res.json({statusCode:500, message:'You did not supply a id for the bet that you want to remove'})
+  }
+  mongoose.model('PlacedBet').remove({_id:id}).then(() => {
+    return res.json({statusCode: 200, message:'Bet removed successfully'})
+  })
+})
+
+
 export default router

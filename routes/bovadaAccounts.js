@@ -32,5 +32,19 @@ router.route('/create')
   .then(() => res.json({statusCode:200, message:'Bovada account created successfully!'}))
 })
 
+router.route('/remove')
+.post((req, res) => {
+  mongoose.model('BovadaAccount').remove({})
+  .then(() => res.json({statusCode:200, message: 'all Bovada accounts have been removed'}))
+  .catch(err => res.json({statusCode: 500, message: 'Internal Server Error'}))
+})
+
+router.route('/remove:id')
+.post((req, res) => {
+  if(!req.body.id) {
+    return res.json({statusCode: 500, message:'You did not specify a id'})
+  }
+  return res.json({statusCode: 200, message: 'Bovada account has been deleted'})
+})
 
 export default router;

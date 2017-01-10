@@ -76,4 +76,32 @@ describe('Model tests', () => {
       done()
     })
   })
+  it('should remove all placed bets', done => {
+    agent
+    .post('/api/placedBets/remove')
+    .then(res => {
+      expect(res).to.be.ok
+      return agent
+              .get('/api/placedBets')
+              .then(res => {
+                expect(res.body).to.be.a('array')
+                expect(res.body.length).to.be.eq(0)
+                done()
+              })
+    })
+  })
+  it('should remove all bovadaAccounts', done => {
+    agent
+    .post('/api/bovadaAccounts/remove')
+    .then(res => {
+      expect(res).to.be.ok
+      return agent
+            .get('/api/bovadaAccounts')
+            .then(res => {
+              expect(res.body).to.be.a('array')
+              expect(res.body.length).to.be.eq(0)
+              done()
+            })
+    })
+  })
 })
