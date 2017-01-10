@@ -4,6 +4,7 @@ const placedBetSchema = mongoose.Schema({
   edgebetId: Number,
   outcomeId: Number,
   bovadaAccountId: String,
+  stake: Number,
   createdAt: {
     type: Date,
     default: Date.now

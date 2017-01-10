@@ -14,19 +14,17 @@ describe('Model tests', () => {
     mongoose
       .connect(process.env.DATABASE_URL)
       .then(() => {
-        return mongoose.model('BovadaAccount').remove({})
+        return Promise.all([
+          mongoose.model('BovadaAccount').remove({}),
+          mongoose.model('PlacedBet').remove({}),
+          mongoose.model('Match').remove({})
+          ])
       })
       .then(() => {
-        console.log('connected')
+        console.log('connected and models removed')
         done()
       })
       .catch(done)
-  });
-
-  after(done => {
-    mongoose.model('Match').find({}).remove()
-	  .then(() => mongoose.disconnect(done))
-	  .catch(done)
   });
 
   it('Should get all matches', done => {
@@ -42,7 +40,7 @@ describe('Model tests', () => {
   it('should create a bovada account', done => {
     agent
     .post('/api/bovadaAccounts/create')
-    .send({username:'testing@gmail.com', password:'testing'})
+    .send({username:'testing@gmail.com', password:'Testing123'})
     .then(res => {
       expect(res).to.be.ok
       done()
@@ -61,7 +59,7 @@ describe('Model tests', () => {
   it('should save a bet', done => {
     agent
     .post('/api/placedBets/create')
-    .send({bovadaAccountId:123, outcomeId:123, priceId: 123})
+    .send({bovadaAccountId:123, outcomeId:123, priceId: 123, stake:2300})
     .then(res => {
       expect(res).to.be.ok
       done()
