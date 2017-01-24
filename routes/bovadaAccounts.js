@@ -29,7 +29,7 @@ router.route('/create')
     username: req.body.username,
     password: req.body.password
   })
-  .then(() => res.json({statusCode:200, message:'Bovada account created successfully!'}))
+  .then((obj) => res.json({statusCode:200, message:'Bovada account created successfully!', payload:obj}))
 })
 
 router.route('/remove')
@@ -44,7 +44,8 @@ router.route('/remove:id')
   if(!req.body.id) {
     return res.json({statusCode: 500, message:'You did not specify a id'})
   }
-  return res.json({statusCode: 200, message: 'Bovada account has been deleted'})
+  mongoose.model('BovadaAccount').remove({_id:req.body.id})
+  .then(() => res.json({statusCode: 200, message: 'Bovada account has been deleted'}))
 })
 
 export default router;

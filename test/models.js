@@ -14,17 +14,20 @@ describe('Model tests', () => {
     mongoose
       .connect(process.env.DATABASE_URL)
       .then(() => {
-        return Promise.all([
-          mongoose.model('BovadaAccount').remove({}),
-          mongoose.model('PlacedBet').remove({}),
-          mongoose.model('Match').remove({})
-          ])
-      })
-      .then(() => {
-        console.log('connected and models removed')
+        console.log('connected')
         done()
+        // return Promise.all([
+        //   mongoose.model('BovadaAccount').remove({}),
+        //   mongoose.model('PlacedBet').remove({}),
+        //   mongoose.model('Match').remove({})
+        //   ])
       })
       .catch(done)
+      // .then(() => {
+      //   console.log('connected and models removed')
+      //   done()
+      // })
+      
   });
 
   it('Should get all matches', done => {
@@ -42,6 +45,7 @@ describe('Model tests', () => {
     .post('/api/bovadaAccounts/create')
     .send({username:'testing@gmail.com', password:'Testing123'})
     .then(res => {
+      expect(res.body.payload._id).to.not.be.null
       expect(res).to.be.ok
       done()
 
@@ -51,6 +55,7 @@ describe('Model tests', () => {
     agent
     .get('/api/bovadaAccounts')
     .then(res => {
+      console.log(res.body)
       expect(res.body).to.be.a('array')
       expect(res.body.length).to.eq(1)
       done()
