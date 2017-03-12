@@ -3,6 +3,6 @@ import { initializeDatabase } from './config'
 
 initializeDatabase()
 .then(Promise.join([
-  mongoose.model('BovadaAccount').create({username:'jonathankolman@gmail.com', password: 'MakingMoney1995'}),
-  mongoose.model('BovadaAccount').create({username:'elliotlanderson@yahoo.com', 'password': 'Nsr10ojif??'})
+  mongoose.model('BovadaAccount').create({username:'jonathankolman@gmail.com', password: 'testing123'}),
+  mongoose.model('BovadaAccount').create({username:'elliotlanderson@yahoo.com', 'password': 'testing123'})
 ]).then(() => console.log('done')))
